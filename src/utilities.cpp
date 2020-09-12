@@ -13,7 +13,7 @@
 #include "stdlib.h"
 
 using namespace std;
-
+// testing!
 //********************** private to this compilation unit **********************
 
 //if myString does not contain a string rep of number returns o

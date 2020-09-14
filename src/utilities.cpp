@@ -56,7 +56,15 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
-
+	for (int i = 0; i < vec.size(); i++) {
+		//for (int j = 0; j < 4; j++) {
+			switch(mySortOrder) {
+				case CPU_TIME:
+					sort(i.begin(), i.end(), cpu_time); //Check why won't work
+					break;
+			}
+		//}
+	}
 }
 
 process_stats getNext() {

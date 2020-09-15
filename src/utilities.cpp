@@ -56,15 +56,24 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 
 //will sort according to user preference
 void sortData(SORT_ORDER mySortOrder) {
-	for (int i = 0; i < vec.size(); i++) {
+	//for (int i = 0; i < vec.size(); i++) {
 		//for (int j = 0; j < 4; j++) {
 			switch(mySortOrder) {
 				case CPU_TIME:
-					sort(i.begin(), i.end(), cpu_time); //Check why won't work
+					sort(vec.begin(), vec.end(), [](const process_stats ps1, const process_stats ps2){ return ps1.cpu_time < ps2.cpu_time;}); //Think this works?
+					break;
+				case PROCESS_NUMBER:
+					sort(vec.begin(), vec.end(), [](const process_stats ps1, const process_stats ps2){ return ps1.process_number < ps2.process_number;});
+					break;
+				case START_TIME:
+					sort(vec.begin(), vec.end(), [](const process_stats ps1, const process_stats ps2){ return ps1.start_time < ps2.start_time;});
+					break;
+				case IO_TIME:
+					sort(vec.begin(), vec.end(), [](const process_stats ps1, const process_stats ps2){ return ps1.io_time < ps2.io_time;});
 					break;
 			}
 		//}
-	}
+	//}
 }
 
 process_stats getNext() {

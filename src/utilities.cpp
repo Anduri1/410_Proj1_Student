@@ -27,32 +27,40 @@ int stringToInt(const char *myString) {
 int loadData(const char* filename, bool ignoreFirstRow) {
 	ifstream file;
 	process_stats stats;
-	vector<string> str;
-	if (file.open(filename)) {}
-	else {return COULD_NOT_OPEN_FILE;}
-
-	if (ignoreFirstRow) {
-		vec.erase(vec.begin());
+	int count = 0;
+	file.open(filename);
+	if (file.fail()) {return COULD_NOT_OPEN_FILE;}
+	int ch;
+	while ((ch = file.get()) != EOF) { //!eof() does not work, I think
+		if (ignoreFirstRow && count == 0) {
+				cout << "Skipped" << endl;
+				count += 1;
+			} else {
+				vector<int> str;
+				string sub;
+				getline(file, sub, CHAR_TO_SEARCH_FOR);
+				//cout << sub << endl;
+				//Somehow parse stuff here
+				int convert = stoi(sub);
+				str.push_back(convert);
+				for (int i = 0; i < str.size(); i++) {
+					stats.process_number = str[0];
+					stats.start_time = str[1];
+					stats.cpu_time = str[2];
+					stats.io_time = str[3];
+				}
+				if (stats.cpu_time == UNINITIALIZED || stats.io_time  == UNINITIALIZED || stats.process_number  == UNINITIALIZED || stats.start_time  == UNINITIALIZED) {
+						cout << "Corrupt line" << endl;
+					} else {
+						vec.push_back(stats);
+						cout << "Line added" << endl;
+					}
+			}
 	}
 
-	while (!file.eof()) {
-		string sub;
-		getline(file, sub, CHAR_TO_SEARCH_FOR);
-		//cout << sub << endl;
-		//Somehow parse stuff here
-		str.push_back(sub);
-	}
 
-	stats.process_number = str[0];
-	stats.start_time = str[1];
-	stats.cpu_time = str[2];
-	stats.io_time = str[3];
 
-	if (stats.cpu_time() == UNINITIALIZED || stats.io_time()  == UNINITIALIZED || stats.process_number()  == UNINITIALIZED || stats.start_time()  == UNINITIALIZED) {
-		continue;
-	} else {
-		vec.push_back(stats);
-	}
+
 	file.close();
 /*
 	if(vec.empty()) {
@@ -96,5 +104,3 @@ process_stats getNext() {
 int getNumbRows(){
 	return vec.size();
 }
-
-

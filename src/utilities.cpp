@@ -43,7 +43,11 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 
 	}
 
-	vec.push_back(stats);
+	if (stats.cpu_time() == UNINITIALIZED || stats.io_time()  == UNINITIALIZED || stats.process_number()  == UNINITIALIZED || stats.start_time()  == UNINITIALIZED) {
+		continue;
+	} else {
+		vec.push_back(stats);
+	}
 	file.close();
 /*
 	if(vec.empty()) {

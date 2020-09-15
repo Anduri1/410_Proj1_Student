@@ -27,7 +27,7 @@ int stringToInt(const char *myString) {
 int loadData(const char* filename, bool ignoreFirstRow) {
 	ifstream file;
 	process_stats stats;
-	string str;
+	vector<string> str;
 	if (file.open(filename)) {}
 	else {return COULD_NOT_OPEN_FILE;}
 
@@ -40,8 +40,13 @@ int loadData(const char* filename, bool ignoreFirstRow) {
 		getline(file, sub, CHAR_TO_SEARCH_FOR);
 		//cout << sub << endl;
 		//Somehow parse stuff here
-
+		str.push_back(sub);
 	}
+
+	stats.process_number = str[0];
+	stats.start_time = str[1];
+	stats.cpu_time = str[2];
+	stats.io_time = str[3];
 
 	if (stats.cpu_time() == UNINITIALIZED || stats.io_time()  == UNINITIALIZED || stats.process_number()  == UNINITIALIZED || stats.start_time()  == UNINITIALIZED) {
 		continue;
